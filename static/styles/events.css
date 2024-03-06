@@ -1,0 +1,157 @@
+#calendar {
+    max-width: 850px;
+    height: 100%;
+    margin: -81px auto !important;
+    background: #fff;
+    padding: 15px;
+    
+}
+a {
+    text-decoration: none
+}
+
+
+.fc-event {
+    border: 1px solid #eee !important;
+    
+}
+
+.fc-content {
+    padding: 3px !important;
+    
+}
+a {
+    text-decoration: none
+}
+.fc-content .fc-title {
+    display: block !important;
+    overflow: hidden;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    
+}
+
+.fc-customButton-button {
+    font-size: 13px !important;
+    position: absolute;
+    top:  0px;
+    left: 50%;
+    transform: translateY(-50%);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group>label {
+    margin-bottom: 10px;
+}
+
+#delete-modal .modal-footer > .btn {
+    border-radius: 3px !important;
+    padding: 0px 8px !important;
+ }
+
+.fc-scroller {
+    overflow-y: hidden !important;
+}
+
+
+.fc-event {
+    border: 1px solid #eee !important;
+}
+
+.fc-content {
+    padding: 3px !important;
+    overflow: auto;
+}
+
+.fc-content .fc-title {
+    display: block !important;
+    overflow: hidden;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    
+}
+
+.fc-customButton-button {
+    font-size: 13px !important;
+    position: absolute;
+    top:  0px;
+    left: 50%;
+    transform: translateY(-50%);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0em;
+}
+.form-group>label {
+    margin-bottom: 10px;
+}
+
+#delete-modal .modal-footer > .btn {
+    border-radius: 3px !important;
+    padding: 0px 8px !important;
+}
+
+.fc-scroller {
+    overflow-y: hidden !important;
+}
+.fc-toolbar h2 {
+    inline-size: max-content;
+    font-size: 1.75em;
+    margin: 0;
+    translate: 10% 40%;
+}
+.fc-right{
+    display: inline-flex;
+    translate: -90% 40%;
+    margin-bottom: 10%;
+    margin-top: 10%;
+}
+.fc table{
+    translate: 0% -6% !important;
+}
+
+@media(max-width: 930px) {
+    body{
+        overflow: hidden;
+    }
+    
+    #calendar {
+        max-width: 110%;
+        margin: 20px auto;
+        padding: 0%;
+        height: 45%;
+        height: 100%;
+        translate: 0% 20%;
+        /* overflow: auto; */
+    }
+    .fc-toolbar h2 {
+        inline-size: max-content;
+        font-size: 1.75em;
+        margin: 0;
+        translate: 10% -130%;
+    }
+    .fc-right{
+        display: inline-flex;
+        translate: -90% 0%;
+        margin-bottom: 10%;
+        margin-top: 10%;
+    }
+    .fc table{
+        translate: 0% 0% !important;
+    }
+    /* .container-fluid{
+        translate: 0% 13%;
+    } */
+}
+
+

@@ -1,0 +1,212 @@
+<link rel="stylesheet" href="../static/styles/dashboard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false"
+            style="margin-bottom: 300px;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Task Summary</h1>
+                        <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                    </div>
+                    <div class="modal-body">
+                        <div id="checkout-frs-loader"></div>
+
+                        <!-- Title 1 and Textbox 1 -->
+                        <div class="mb-3">
+                            <label for="project" class="form-label">Project</label>
+                            <!--<input type="text" class="form-control" id="title1" placeholder="Enter Project name" data-max-words="20">-->
+                            <select name="projectID" id="projectID" class="form-select form-select-md mb-3">
+                                {% for i in proj%}
+                                <option value="{{i['id']}}">{{i["name"]}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Title 2 and Textbox 2 -->
+                        <div class="mb-3">
+                            <label for="title2" class="form-label">Description</label>
+                            <textarea name="tasks" id="tasks" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <!-- Title 3 and Radio buttons -->
+                        <div class="mb-3">
+                            <label class="form-label">Task type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="task_type" value="Project"
+                                    aria-selected="true">
+                                <label class="form-check-label">Project</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="task_type" value="Learning">
+                                <label class="form-check-label">Learning</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="task_type"
+                                    value="Research and Development">
+                                <label class="form-check-label">Research and Development</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modalBtn" type="submit" class="btn btn-success">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <video id="video" width="640" height="480" autoplay hidden></video>
+        <div id="frs-loader"></div>
+        <div id="frs-status"></div>
+        <div class="col-md-4">
+            <div class="card  p-2 rounded" style="height: 130px; align-content: center; " id="check-div">
+                <div class="card-body">
+                    <div class="row" id="1row">
+                        <div class="col-sm-6" style="margin-top:10px ;">
+                            <div id="workinghrs" style="margin: 10px;font-size: 25px;">00:00:00</div>
+                        </div>
+                        <div class="col-sm-6" style="margin-top:10px ;">
+                            <button id="checkInBtn" type="button" class="btn btn-in  p-2 rounded" {%if cin==False
+                                %} hidden {%endif%}>Check
+                                In</button>
+                            <button id="checkOutBtn" type="button" class="btn btn-out  p-2 rounded"
+                                data-bs-toggle="modal" data-bs-target="#modalForm" {%if cou==False %} hidden
+                                {%endif%}>Check
+                                Out</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card p-2 rounded d-flex justify-content-center quote"
+                style="height: 130px; align-content: center;">
+                <div class="card-heading" style="width: 30px; height: 30px;">
+                    <i class='bx bxs-quote-left' style="color:rgb(80, 105, 80);"></i>
+                </div>
+                <div class="card-body">
+                    <div style="text-align: center;">
+                        <h5>
+                            <blockquote class="blockquote">
+                                <p> {{quote[0]}}</p>
+                            </blockquote>
+                        </h5>
+                        <!--<i class='bx bxs-quote-right' style="color: green;"></i>-->
+                    </div>
+                    <h5 style="text-align: center;">
+                        {% if quote[2] %}
+                        <figcaption class="blockquote-footer">
+                            {{quote[2]}}
+                        </figcaption>
+                        {%endif%}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card p-2 rounded">
+                <div class="card-heading cd">My Timesheet</div>
+                <div class="card-body overflow-scroll" style="padding:0px;">
+                    <input type="text" id="record_id" {%if record_id !=None %} value="{{record_id}}" {%endif%} hidden>
+                    <table id="myAtt" class="table " style="text-align: center;">
+                        <tr class="thead">
+                            <!--<th scope="col">Email</th>-->
+                            <th scope="col"></th>
+                            <th scope="col">Check-In Time</th>
+                            <th scope="col">Break Time</th>
+                            <th scope="col">Check-Out Time</th>
+                            <th scope="col">Total Working Time</th>
+                        </tr>
+                        {% if session["indiv_att"]!= None %}
+                        {%for record in session["indiv_att"]%}
+                        <tr>
+                            {% if record['ip_range'] %}
+                            <td><i class="bi bi-wifi"></i></td>
+                            {% elif record['ip_range']=="" %}
+                            <td><i class="bi bi-exclamation-triangle"></i></td>
+                            {% else %}
+                            <td><i class="bi bi-house-door"></i></td>
+                            {% endif %}
+                            <td>{{record['in']}}
+                                {% if record['is_first_checkin']== True %}
+                                {% if record['in']<= '09:30:00' %} <span class="badge rounded-pill bg-success"
+                                    style="margin: 3px;">Early</span>
+                                    {% elif record['in']> '09:30:00' %}
+                                    <span class="badge rounded-pill bg-danger" style="margin: 3px;">Late</span>
+                                    {% endif %}
+                                    {% endif %}
+                            </td>
+                            <td>{{record['breakTime']}}</td>
+                            {%if record['out'] != None%}
+                            <td>{{record['out']}}</td>
+                            <td>{{record['totalhr']}}</td>
+                            {%else%}
+                            <td></td>
+                            <td></td>
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card p-2 rounded" style="height: 220px;">
+                <div class="card-heading cd">Other's Timesheet</div>
+                <div class="card-body overflow-scroll" style="padding:0px; ">
+                    <table id="allAtt" class="table" style="text-align: center;">
+                        <tr class="thead">
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Check-In Time</th>
+                            <th scope="col">Check-Out Time</th>
+                        </tr>
+                        {% if session["indiv_att"]!= None %}
+                        {%for record in all_att%}
+                        <tr>
+                            {% if record['ip_range'] %}
+                            <td><i class="bi bi-wifi"></i></td>
+                            {% elif record['ip_range']=="" %}
+                            <td><i class="bi bi-exclamation-triangle"></i></td>
+                            {% else %}
+                            <td><i class="bi bi-house-door"></i></td>
+                            {% endif %}
+                            <td>{{record['name']}}</td>
+                            <td>{{record['email']}}</td>
+                            <td> {{record['in']}}
+                                {% if record['is_first_checkin'] == True %}
+                                {% if record['in']<= '09:30:00' %} <span class="badge rounded-pill bg-success"
+                                    style="margin: 3px;">Early</span>
+                                    {% elif record['in']> '09:30:00' %}
+                                    <span class="badge rounded-pill bg-danger" style="margin: 3px;">Late</span>
+                                    {% endif %}
+                                    {% endif %}
+                            </td>
+                            {%if record['out'] != None%}
+                            <td>{{record['out']}}</td>
+                            {%else%}
+                            <td></td>
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/js/dashboard.js">
+</script>
+<script src="https://cdn.rawgit.com/robcowie/jquery-stopwatch/master/jquery.stopwatch.js"></script>

@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="../static/styles/notifications.css">
+<body style="height: 100%">
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade" style="width: 100% !important;">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content" style="white-space: pre-wrap;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="clearID()"></button>
+                </div>
+                <div class="modal-body" style="padding-top:0px;height: 100% !important;">
+                    <div id="modalContent" style="height: 100% !important;"></div>
+                </div>
+                <div id="modalFooter" class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    <div class="notification-list" style="height: 50%;">
+        {%if notis != []%}
+        {% for data in notis%}
+        <div class="notification" style="cursor: pointer;"
+            onclick="showModal(`{{empID}}`,`{{data['id']}}`,`{{data['notification']}}`,`{{data['subject']}}`,`{{data['dateTime']}}`)">
+            {% if empID not in (data['readById']) %}<b>{%endif%}
+                <div class="sender-info">
+                    <div class="sender-avatar">A</div>
+                    <div class="sender-name">Admin</div>
+                </div>
+                <div class="notification-header">{{data['subject']}}</div>
+                <div class="notification-content"></div>
+                <div class="notification-time">{{data['dateTime']}}</div>
+                {% if empID not in (data['readById']) %}
+            </b>{%endif%}
+        </div>
+        {%endfor%}
+        {% else %}
+        <div class="row">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-4">
+                <span
+                    style="color: rgb(171, 171, 171); text-align: center; align-items: center; align-content: center;">No
+                    Notifications </span>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+        {%endif%}
+    </div>
+    <div id="myModal"></div>
+</body>
+<script>
+    async function showModal(empID, id, noti, sub, time) {
+        // Get the modal element
+        var modal = document.getElementById("myModal");
+        // Get the content element within the modal
+        var modalContent = document.getElementById("modalContent");
+        var modalFooter = document.getElementById("modalFooter");
+        var modalTitle = document.querySelector('.modal-title')
+        // Set the content within the modal
+        modalTitle.innerHTML = '<b>' + sub + '</b>'
+        modalContent.innerHTML = noti + '<br><br>';
+        modalFooter.innerHTML = '<div class="text-end" style="font-size:15px">' + time + '</div>'
+        // Display the modal
+        var modalInstance = new bootstrap.Modal(modal);
+        modalInstance.show();
+        // Append the query parameter to the URL
+        /*var currentUrl = window.location.href;
+        if (currentUrl.includes('?id')) {
+            currentUrl = currentUrl.split('?id=')[0];
+        }
+        var updatedUrl = currentUrl + '?id='+id;
+        window.history.pushState({ path: updatedUrl }, '', updatedUrl);*/
+        var response = mark_noti(empID, id)
+    }
+
+    function clearID() {
+        window.location = '/notifications/'
+    }
+
+    async function mark_noti(empID, id) {
+        try {
+            const response = await fetch("/notifications/mark_noti_as_read", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ "id": id, "empID": empID }),
+            });
+
+            const result = await response.json();
+            console.log("Success:", result);
+            return result
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+</script>
+
+</html>

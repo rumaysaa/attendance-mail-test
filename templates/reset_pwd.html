@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Forgot Password</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="website icon" type="png" href="../static/images/page_tiltle_logo.png">
+
+    <!-- Custom styles for this template -->
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            height: auto;
+            width: 550px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: rgba(125, 115, 115, 0.1) 0rem 0.25rem 0.375rem -0.0625rem, rgba(0, 0, 0, 0.06) 0rem 0.125rem 0.25rem -0.0625rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .otp-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .otp-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+
+        label {
+            margin-top: 20px
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-dark border-bottom border-body fixed-top bg-body-tertiary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <span class="navbar-brand">
+                <img src="../../static/images/company_logo.png" alt="Algobrain AI Logo" style="height: 27px;">
+            </span>
+        </div>
+    </nav>
+    <div class="login-container">
+        <h2 class="mb-4">Password Reset</h2>
+        <form action="/auth/reset_password" method="post">
+            <div class="form-floating mb-3">
+                <label for="floatingInput">New Password</label>
+                <input type="password" class="form-control" id="new_pwd" name="new_pwd"
+                    placeholder="Enter New Password">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Confirm New Password</label>
+                <input type="password" class="form-control" name="conf_new_pwd" id="conf_new_pwd"
+                    placeholder="Confirm New Password">
+            </div>
+            <button type="submit" class="btn btn-dark submit_btn my-4" id=enter"
+                style="width: 100%;">Submit</button>
+        </form>
+    </div>
+    </div>
+    <script>
+        $("#conf_new_pwd").blur(function () {
+            var user_pass = $("#new_pwd").val();
+            var user_pass2 = $("#conf_new_pwd").val();
+            //var enter = $("#enter").val();
+
+            if (user_pass.length == 0) {
+                alert("please fill password first");
+                $("#enter").prop('disabled', true)//use prop()
+            } else if (user_pass == user_pass2) {
+                $("#enter").prop('disabled', false)//use prop()
+            } else {
+                $("#enter").prop('disabled', true)//use prop()
+                alert("Password unmatched");
+            }
+
+        });
+    </script>
+</body>
+
+</html>

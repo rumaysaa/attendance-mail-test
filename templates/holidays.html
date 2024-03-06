@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="../static/styles/holidays.css">
+<div class="container" style="overflow: scroll;height: 98%;background-color: #ffffff;">
+    <div class="row">
+        {%if holidays == []%}
+        <div class="row">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-4">
+                <span style="color: rgb(171, 171, 171); text-align: center; align-items: center; align-content: center;">No upcoming
+                    Holidays </span>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+        {%endif%}
+        {% for data in holidays%}
+        <div class="col-lg-4">
+            <div class="card" id="card-div" style="margin-bottom: 15px;">
+                <div class="card-header no-border">
+                    <h5 class="card-title">Holiday</h5>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+                            <div class="widget-49-date-primary">
+                                <span class="widget-49-date-day">{{data['day']}}</span>
+                                <span class="widget-49-date-month">{{data['month']}}</span>
+                            </div>
+                            <div class="widget-49-meeting-info">
+                                <span class="widget-49-pro-title">{{data['name']}}</span>
+                                <!--<span class="widget-49-meeting-time">9:00 to 18:00 Hrs</span>-->
+                            </div>
+                        </div>
+                        <ol class="widget-49-meeting-points">
+                            <li class="widget-49-meeting-item"><span>{{data['ins1']}}</span></li>
+                            {%if data['ins2'] != '' %}
+                            <li class="widget-49-meeting-item"><span>{{data['ins2']}}</span></li>
+                            {%endif%}
+                            {%if data['ins3'] != '' %}
+                            <li class="widget-49-meeting-item"><span>{{data['ins3']}}</span></li>
+                            {%endif%}
+                        </ol>
+
+                    </div>
+                </div>
+            </div>
+        </div>        
+        {%endfor%}
+    </div>
+</div>

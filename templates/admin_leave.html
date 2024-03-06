@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../static/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="../../static/styles/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="../../static/styles/style.css" />
+    <link rel="stylesheet" href="../../static/styles/admin_dashboard.css" />
+    <title>Admin</title>
+    <link rel="website icon" type="png" href="../../static/images/page_tiltle_logo.png">
+    <style>
+        .mbsc-range-label-clear {
+            display: none
+        }
+
+        .container-custom {
+            margin: 0;
+            translate: 24% 1%;
+            margin-top: 50px;
+            width: 80%;
+        }
+
+        .avatar.sm {
+            width: 2.25rem;
+            height: 2.25rem;
+            font-size: .818125rem;
+        }
+
+        .container-fluid {
+            translate: 0% 0%;
+            overflow-x: hidden;
+
+        }
+
+        body {
+            margin-top: 0px;
+            overflow-x: hidden !important;
+        }
+
+        .btn-app {
+            background-color: #a1c7ca;
+            margin: 5px;
+        }
+
+        .leave-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .leave-card header {
+            font-size: 24px;
+            color: #000000;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .leave-card .leave-details p {
+            margin-bottom: 10px;
+            color: #242424;
+        }
+
+        .btn-approve,
+        .btn-reject {
+            margin-top: 10px;
+        }
+
+
+        @media (max-width: 786px) {
+            .container-custom {
+                max-width: 100%;
+                /* Adjust as needed */
+                translate: 3% 3%;
+                margin-top: 70px;
+                overflow: scroll;
+            }
+
+            body {
+                overflow-x: hidden !important;
+            }
+
+            .leave-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- top navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                aria-controls="offcanvasExample">
+                <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
+            </button>
+
+            <a class="navbar-brand me-auto ms-lg-0 ms-3" href="#">
+                <img src="../../static/images/company_logo.png" alt="Algobrain AI Logo" style="height: 27px;">
+            </a>
+
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavBar"
+                aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <form class="d-flex ms-auto my-3 my-lg-0">
+                </form>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle ms-2" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-person-fill"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/admin/change_password">Change password</a></li>
+                            <!--<li>
+                                    <a class="dropdown-item" href="#">Upcoming deadlines</a>
+                                </li>-->
+                        </ul>
+                    </li>
+                    <li style="margin-left: 15px;">
+                        <a href="/auth/logout" class="nav-link btn-sm btn-danger"
+                            style="color:white;border-radius: 10px;">
+                            <span><i class="bi bi-box-arrow-right"></i> </span>
+                            <span>SignOut</span> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- top navigation bar -->
+    <!-- offcanvas -->
+    <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
+        <div class="offcanvas-body p-0">
+            <nav class="navbar-dark">
+                <ul class="navbar-nav">
+                    <li>
+                        <div class=" small fw-bold text-uppercase px-3" style="color: #a5a5a5;">
+                            Main
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                            <span>Dashboard</span>
+                        </a>
+                        <!--<a href="#" class="nav-link px-3">
+                          <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                          <span>Attendance</span>
+                        </a>-->
+                    </li>
+                    <li class="my-1">
+                        <hr class="dropdown-divider bg-light" />
+                    </li>
+                    <li>
+                        <div class=" small fw-bold text-uppercase px-3 mb-3" style="color: #a5a5a5;">
+                            Users
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin/users/register" class="nav-link px-3" id="openModalLink">
+                            <span class="me-2"><i class="bi bi-person-plus-fill"></i></span>
+                            <span>Create new user</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="/admin/users/view" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-people-fill"></i></span>
+                            <span>View users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/leave" class="nav-link px-3 active">
+                            <span class="me-2"><i class="bi bi-envelope-open-fill"></i></span>
+                            <span>Leave Requests</span>
+                        </a>
+                    </li>
+
+                    <li class="my-1">
+                        <hr class="dropdown-divider bg-light" />
+                    </li>
+                    <li>
+                        <div class="small fw-bold text-uppercase px-3 mb-3" style="color: #a5a5a5;">
+                            Projects
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin/projects/create" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-file-earmark-plus-fill"></i></span>
+                            <span>Create new project</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/projects/view" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-stack"></i></span>
+                            <span>View projects</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="/admin/tasks" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-ui-checks"></i></span>
+                            <span>Tasks</span>
+                        </a>
+
+                    </li>
+
+                    <li class="my-1">
+                        <hr class="dropdown-divider bg-light" />
+                    </li>
+                    <li>
+                        <div class=" small fw-bold text-uppercase px-3 mb-3" style="color: #a5a5a5;">
+                            Utilities
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin/events" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-calendar-event-fill"></i></span>
+                            <span>Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/notifications" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-chat-square-dots-fill"></i></span>
+                            <span>Notifications</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="/admin/holidays" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-calendar2-check-fill"></i></span>
+                            <span>Holidays</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- offcanvas -->
+    <div class="container-custom">
+        <div class="row">
+            <div class="col-lg-10"></div>
+            <div class="float-right col-lg-2">
+                <input id="leave-month" class="form-control" style="margin:5px" type="month" name="leave-month"
+                    onchange="handleInputChange()">
+            </div>
+            {%if leaves == []%}
+            <div class="row" style=" margin-top: 50px;">
+                <div class="col-lg-5"></div>
+                <div class="col-lg-4">
+                    <span
+                        style="color: rgb(171, 171, 171); text-align: center; align-items: center; align-content: center;">No
+                        leave requests</span>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+            {%endif%}
+
+            {% for leave in leaves %}
+            <div class="col-sm-12">
+                <div class="leave-card">
+                    <header>{{leave['leave_type']}} Leave </header>
+                    <div class="leave-details" style="padding:10px">
+                        <div class="row" style="margin-bottom: 5px;">
+                            <div class="col-sm-4">
+                                <img class="avatar sm rounded-pill me-3 flex-shrink-0"
+                                    src="../../static/images/{{leave['emp_avatarID']}}.jpg" alt="Customer">
+                                <span style="color: rgb(73, 94, 167);"><strong> {{leave['emp_name']}}</strong></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <p style="color: rgb(73, 94, 167);"><strong>{{leave['emp_email']}}</strong></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p><strong>From:</strong> {{leave['start_date']}}</p>
+                            </div>
+
+                            {% if leave['end_date']!= None %}
+                            <div class="col-sm-4">
+                                <p><strong>To:</strong> {{leave['end_date']}}</p>
+                            </div>
+                            {% endif %}
+
+
+                            {% if leave['start_hr']!=None %}
+                            <div class="col-sm-4">
+                                <p><strong>Start Hour:</strong> {{leave['start_hr']}}</p>
+                            </div>
+                            {%
+                            endif %}
+
+
+                            {% if leave['end_hr']!=None %}
+                            <div class="col-sm-4">
+                                <p><strong>End Hour:</strong> {{leave['end_hr']}}</p>
+                            </div>
+                            {%
+                            endif %}
+
+                        </div>
+                        <strong>Content: </strong> <input class="btn-sm btn btn-light " type="button"
+                            id="{{leave['_id']}}" onclick="showMsg(`{{leave['_id']}}`)" value="Show">
+                        <div id="{{leave['_id']}}msg"
+                            style="white-space: pre-wrap; background-color: rgb(248, 248, 248);display: none;padding:5px">
+                            <div>{{leave['reason']}}</div>
+                            <div style="color:grey;" class="text-end">Applied on: {{leave['applied_on']}}</div>
+                        </div>
+                        </p>
+                        {% if leave['status'] == -1 %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <textarea id="add_msg{{leave['_id']}}" name="add_msg" class="form-control"
+                                    placeholder="Additional message" rows="1"></textarea>
+                                <button class="btn btn-success btn-approve"
+                                    onclick="approveLeave(`{{leave['_id']}}`,`{{leave['emp_email']}}`,`{{leave['applied_on']}}`)">Approve</button>
+                                <button class="btn btn-danger btn-reject"
+                                    onclick="rejectLeave(`{{leave['_id']}}`,`{{leave['emp_email']}}`,`{{leave['applied_on']}}`)">Reject</button>
+                            </div>
+                            <div class="col-md-5">
+                                <div style="display: none;" class="toast mt-3" id="toast{{leave['_id']}}">
+                                    <div class="toast-header">
+                                        Leave status
+                                    </div>
+                                    <div class="toast-body" id="toast-data">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% elif leave['status'] == 1 %}
+                        <p><strong>Status:
+                                <span style="color:rgb(9, 157, 19)">Approved
+                                </span></p></strong>
+                        {% elif leave['status'] == 0 %}
+                        <p><strong>Status:
+                                <span style="color:rgb(203, 42, 37)">Declined
+                                </span></p></strong>
+                        {%endif%}
+                        {% if leave['message'] != "" %}
+                        <p style="font-size: 13px;">Additioonal Message:
+                            <span>{{leave['message']}}
+                            </span>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Add more leave cards for other requests -->
+        </div>
+    </div>
+    </main>
+    <script src="../../static/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+    <script src="../../static/js/jquery-3.5.1.js"></script>
+    <script src="../../static/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+
+        // Function to handle input change
+        function handleInputChange() {
+            const monthYearValue = document.getElementById('leave-month').value;
+            if (monthYearValue == "") {
+                setCurrentDate()
+                console.log("hi")
+            }
+            else {
+                const [year, month] = monthYearValue.split('-');
+
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('month', month);
+                urlParams.set('year', year);
+
+
+                window.location.href = `${window.location.pathname}?${urlParams}`
+            }
+
+            //window.history.replaceState({}, '', newURL);
+        }
+        // Function to parse URL parameters and get the value for a specific parameter
+        function getParamValue(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        function setCurrentDate(urlParams) {
+            // Get the current date
+            const currentDate = new Date();
+            // Get the current month and year in the format YYYY-MM
+            const currentMonth = currentDate.getMonth() + 1; // January is 0
+            const currentYear = currentDate.getFullYear();
+            console.log(currentMonth, currentYear)
+            urlParams.set('month', currentMonth);
+            urlParams.set('year', currentYear);
+            // Set the value of the input field to the current month and year
+            var monthYearValue = document.getElementById('leave-month');
+            monthYearValue.value = `${currentYear}-${String(currentMonth).padStart(2, '0')}`;
+            window.location.href = `${window.location.pathname}?${urlParams}`
+        }
+        // Call the function when the page loads
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            var monthYearValue = document.getElementById('leave-month');
+            if (!urlParams.has('month')) {
+                setCurrentDate(urlParams)
+            }
+            else {
+                monthYearValue.value = `${getParamValue('year')}-${String(getParamValue('month')).padStart(2, '0')}`;
+            }
+        };
+        function showMsg(leaveID) {
+            btn = document.getElementById(leaveID)
+            msg = document.getElementById(leaveID + 'msg')
+            if (msg.style.display == "none") {
+                msg.style.display = "block"
+                btn.value = 'Hide'
+            }
+            else if (msg.style.display == "block") {
+                msg.style.display = "none"
+                btn.value = 'Show'
+            }
+        }
+        function approveLeave(leave_id, emp_email, app_date) {
+            response = updateLeaveStatus(leave_id, 1, emp_email, app_date)
+            t = document.getElementById('toast' + leave_id)
+            t.style.display = "block"
+            toast_data = document.getElementById('toast-data')
+            toast_data.innerHTML = "Leave approved successfully"
+            $('.toast').toast({ animation: true });
+            $('.toast').toast('show');
+            setTimeout(function () {
+                window.location.href = window.location.search;
+            }, 1500);
+
+        }
+        function rejectLeave(leave_id, emp_email, app_date) {
+            response = updateLeaveStatus(leave_id, 0, emp_email, app_date)
+            t = document.getElementById('toast' + leave_id)
+            console.log(t)
+            t.style.display = "block"
+            toast_data = document.getElementById('toast-data')
+            toast_data.innerHTML = "Leave declined successfully"
+            $('.toast').toast({ animation: true });
+            $('.toast').toast('show');
+            setTimeout(function () {
+                window.location.href = window.location.search;
+            }, 1500);
+        }
+        async function updateLeaveStatus(leave_id, status, emp_email, app_date) {
+            try {
+                const msg = document.getElementById('add_msg' + leave_id)
+                const response = await fetch("/admin/leave/update_leave_status", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "leaveID": leave_id,
+                        "status": status,
+                        "employee_email": emp_email,
+                        "apply_date": app_date,
+                        "msg": msg.value
+                    }),
+                });
+                const result = await response.json();
+                console.log("Success:", result);
+                return result
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>

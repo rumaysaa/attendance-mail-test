@@ -1,0 +1,78 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.2.0/main.min.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.3.0/main.min.css'>
+    <link rel="stylesheet" href="../static/styles/events.css">
+
+</head>
+
+
+<body id="body-pd" class="body-pd">
+    <div id='calendar'></div>
+    <!-- Delete Modal -->
+
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.2.0/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.2.0/main.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.2.0/main.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const calendarEl = document.getElementById('calendar');
+            const dangerAlert = document.getElementById('danger-alert');
+            const close = document.querySelector('.btn-close');
+            const url = '/admin/events/get_json'
+            const response = await fetch(url)
+            const myEvents = await response.json()
+            console.log(myEvents)
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                customButtons: {
+                },
+                header: {
+                    center: 'customButton', // add your custom button here
+                    right: 'today, prev,next '
+                },
+                plugins: ['dayGrid', 'interaction'],
+                allDay: false,
+                editable: false,
+                selectable: true,
+                unselectAuto: false,
+                displayEventTime: false,
+                events: myEvents,
+
+                eventDrop: function (info) {
+                    let myEvents = JSON.parse(localStorage.getItem('events')) || [];
+                    const eventIndex = myEvents.findIndex(event => event.id === info.event.id);
+                    const updatedEvent = {
+                        ...myEvents[eventIndex],
+                        id: info.event.id,
+                        title: info.event.title,
+                        start: moment(info.event.start).format('YYYY-MM-DD'),
+                        end: moment(info.event.end).format('YYYY-MM-DD'),
+                        backgroundColor: info.event.backgroundColor
+                    };
+                    myEvents.splice(eventIndex, 1, updatedEvent); // Replace old event data with updated event data
+                    localStorage.setItem('events', JSON.stringify(myEvents));
+                    console.log(updatedEvent);
+                }
+
+            });
+
+            calendar.on('select', function (info) {
+
+                const startDateInput = document.getElementById('start-date');
+                const endDateInput = document.getElementById('end-date');
+                startDateInput.value = info.startStr;
+                const endDate = moment(info.endStr, 'YYYY-MM-DD').subtract(1, 'day').format('YYYY-MM-DD');
+                endDateInput.value = endDate;
+                if (startDateInput.value === endDate) {
+                    endDateInput.value = '';
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>

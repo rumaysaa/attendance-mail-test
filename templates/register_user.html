@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../static/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="../../static/styles/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="../../static/styles/style.css" />
+    <title>Admin</title>
+    <link rel="website icon" type="png" href="../../static/images/page_tiltle_logo.png">
+
+    <style>
+        label {
+            font-size: medium;
+        }
+
+        .body {
+            width: 100%;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+
+        }
+
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(251, 247, 247, 0.3);
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+
+        }
+
+        ::-webkit-scrollbar-thumb {
+            margin-top: 5px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: rgb(255, 255, 255, 0.5);
+            -webkit-box-shadow: inset 0 0 6px rgba(6, 6, 6, 0.8);
+            margin-top: 5%;
+
+        }
+
+
+
+        ::-webkit-scrollbar-thumb:window-inactive {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+
+        .card {
+            position: relative;
+            display: flex;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 20%);
+            border-radius: 0.25rem;
+            right: 30px;
+            top: 65px;
+            border-radius: 12px;
+            translate: 0% 0%;
+            width: 900px;
+            max-height: 30% !important;
+            overflow-y: scroll;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin-top: 50px;
+                max-width: 100% !important;
+            }
+
+            #signout-btn {
+                padding: 5px
+            }
+
+            .card {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+        <!-- top navigation bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                    aria-controls="offcanvasExample">
+                    <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
+                </button>
+    
+                <a class="navbar-brand me-auto ms-lg-0 ms-3" href="#">
+                    <img src="../../static/images/company_logo.png" alt="Algobrain AI Logo" style="height: 27px;">
+                </a>
+    
+    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavBar"
+                    aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="topNavBar">
+                    <form class="d-flex ms-auto my-3 my-lg-0">
+                    </form>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ms-2" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-person-fill"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>
+                                <li><a class="dropdown-item" href="/admin/change_password">Change password</a></li>
+                            </ul>
+                        </li>
+                        <li style="margin-left: 15px;">
+                            <a href="/auth/logout" class="nav-link btn-sm btn-danger"
+                                style="color:white;border-radius: 10px;">
+                                <span><i class="bi bi-box-arrow-right"></i> </span>
+                                <span>SignOut</span> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <!-- top navigation bar -->
+     <!-- offcanvas -->
+     <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
+        <div class="offcanvas-body p-0">
+            <nav class="navbar-dark">
+                <ul class="navbar-nav">
+                    <li>
+                        <div class=" small fw-bold text-uppercase px-3" style="color: #a5a5a5;">
+                            Main
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                            <span>Dashboard</span>
+                        </a>
+                        <!--<a href="#" class="nav-link px-3">
+                          <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                          <span>Attendance</span>
+                        </a>-->
+                    </li>
+                    <li class="my-1">
+                        <hr class="dropdown-divider bg-light" />
+                    </li>
+                    <li>
+                        <div class=" small fw-bold text-uppercase px-3 mb-3" style="color: #a5a5a5;">
+                            Users
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin/users/register" class="nav-link px-3 active" id="openModalLink">
+                            <span class="me-2"><i class="bi bi-person-plus-fill"></i></span>
+                            <span>Create new user</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="/admin/users/view" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-people-fill"></i></span>
+                            <span>View users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/leave" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-envelope-open-fill"></i></span>
+                            <span>Leave Requests</span>
+                        </a>
+                    </li>
+
+                    <li class="my-1">
+                        <hr class="dropdown-divider bg-light" />
+                    </li>
+                    <li>
+                        <div class="small fw-bold text-uppercase px-3 mb-3" style="color: #a5a5a5;">
+                            Projects
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin/projects/create" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-file-earmark-plus-fill"></i></span>
+                            <span>Create new project</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/projects/view" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-stack"></i></span>
+                            <span>View projects</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="/admin/tasks" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-ui-checks"></i></span>
+                            <span>Tasks</span>
+                        </a>
+
+                    </li>
+                    
+                    <li class="my-1">
+                        <hr class="dropdown-divider bg-light" />
+                    </li>
+                    <li>
+                        <div class=" small fw-bold text-uppercase px-3 mb-3" style="color: #a5a5a5;">
+                            Utilities
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/admin/events" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-calendar-event-fill"></i></span>
+                            <span>Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/notifications" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-chat-square-dots-fill"></i></span>
+                            <span>Notifications</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="/admin/holidays" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-calendar2-check-fill"></i></span>
+                            <span>Holidays</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- offcanvas -->
+    <body style="background-color: #eee;">
+        <main>
+            <div class="container">
+                <section class=" gradient-custom">
+                    <div class="container py-4">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-12 col-lg-9 col-xl-9">
+                                <div class="card shadow card-registration card-st"
+                                    style="border-radius: 15px; height: 590px;">
+                                    <div class="card-header"
+                                        style="position: sticky; top: 0; background-color: #fff; padding-top:25px;margin-top:15px;margin-left:15px;margin-bottom: 0px;margin-right:15px">
+                                        <h4>User Details</h4>
+                                    </div><br><br>
+                                    <div class="card-body p-4 p-md-4" style="margin-left:20px;margin-right:20px;">
+                                        <form method="post" action="/admin/users/register">
+                                            <input type="text" id="userID" name="userID" value="{{user_id}}" hidden>
+                                            {% if user!= None %}
+                                            <a onclick="show_btns()" id="showCam" href="#showCam"
+                                                class="btn btn-light mb-2 w-100">
+                                                <i class="bi bi-camera" style="margin-right: 10px;">
+                                                </i> Register/Edit Face
+                                            </a>
+                                            <div id="frs-status"></div>
+                                            <div id="frs-btns"></div>
+                                            {% endif %}
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2">
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="firstName">First Name</label>
+                                                        <input type="text" id="firstName" name="fname"
+                                                            class="form-control form-control" {% if user!="None" %}
+                                                            value="{{user['fname']}}" {% endif %} required />
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-2">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="lastName">Last Name</label>
+                                                        <input type="text" id="lastName"
+                                                            class="form-control form-control" name="lname" {% if
+                                                            user!="None" %} value="{{user['lname']}}" {% endif %}
+                                                            required />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="firstName" {% if user!=None %} hidden
+                                                        {% endif %}>User Name</label>
+                                                    <input type="text" id="username" name="username"
+                                                        class="form-control form-control" required {% if user!=None %}
+                                                        value="0" hidden{% endif %} />
+                                                    <div id="message"
+                                                        style="display: none; color:red; font-size: 13px;">Username
+                                                        should be unique</div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2 d-flex align-items-center">
+
+                                                    <div class="form-outline datepicker w-100">
+                                                        <label for="birthdayDate" class="form-label">Birthday</label>
+                                                        <input type="date" class="form-control form-control"
+                                                            id="birthdayDate" name="dob" required {% if user!="None" %}
+                                                            value="{{user['dob']}}" {% endif %} />
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-2 d-flex align-items-center">
+
+                                                    <div class="form-outline datepicker w-100">
+                                                        <label for="birthdayDate" class="form-label">Joining
+                                                            Date</label>
+                                                        <input type="date" class="form-control form-control"
+                                                            id="birthdayDate" name="joining_date" required {% if
+                                                            user!="None" %} value="{{user['joining_date']}}" {% endif
+                                                            %} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 d-flex align-items-center">
+                                                    <div class="form-outline datepicker w-100">
+                                                        <div>
+                                                            <label for="address" class="form-label">Address</label>
+                                                            <textarea class="form-control form-control" id="address"
+                                                                name="add" rows="2"
+                                                                required>{%if user != "None" and user['add']!= None %}{{user['add']}}{% endif %}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-2 d-flex align-items-center">
+                                                    <div class="form-outline datepicker w-100">
+                                                        <label for="city" class="form-label">City
+                                                        </label>
+                                                        <input type="text" class="form-control form-control" id="city"
+                                                            name="city" required {% if user!="None" and
+                                                            user['city']!=None %} value="{{user['city']}}" {% endif
+                                                            %} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-2">
+                                                    <label for="gender" class="form-label">Gender
+                                                    </label><br>
+                                                    <div class="form-check form-check-inline form-check">
+
+                                                        <input class="form-check-input " type="radio" name="gender"
+                                                            id="femaleGender" value="female" checked {% if user!="None"
+                                                            %} {% if user['gender']=='female' %} checked {% endif %} {%
+                                                            endif %} />
+                                                        <label class="form-check-label"
+                                                            for="femaleGender">Female</label>
+                                                    </div>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="gender"
+                                                            id="maleGender" value="male" {% if user!="None" %} {% if
+                                                            user['gender']=='male' %} checked {% endif %} {% endif %} />
+                                                        <label class="form-check-label" for="maleGender">Male</label>
+                                                    </div>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="gender"
+                                                            id="otherGender" value="other" {% if user!="None" %} {% if
+                                                            user['gender']=='other' %} checked {% endif %} {% endif
+                                                            %} />
+                                                        <label class="form-check-label" for="otherGender">Other</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-2 d-flex align-items-center">
+                                                    <div class="form-outline datepicker w-100">
+                                                        <div>
+                                                            <label for="email" class="form-label">Email</label>
+                                                            <input class="form-control form-control" id="address"
+                                                                name="email" type="email" required {%if user !=None %}
+                                                                value="{{user['email']}}" {% endif %}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-2 d-flex align-items-center">
+                                                    <div class="form-outline datepicker w-100">
+                                                        <div>
+                                                            <label for="email" class="form-label">Phone</label>
+                                                            <input class="form-control form-control" id="phone"
+                                                                name="phone" type="number" required {%if user !=None %}
+                                                                value="{{user['phone']}}" {% endif %}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2">
+                                                    <label class="form-label select-label">Designation</label>
+                                                    <div class="select-container">
+                                                        <select name="desig" class="select form-control">
+                                                            <option value="Intern" {% if user!="None" %} {% if
+                                                                user['desig']=='Intern' %} selected {% endif %} {% endif
+                                                                %}>Intern</option>
+                                                            <option value="Employee" {% if user!="None" %} {% if
+                                                                user['desig']=='Employee' %} selected {% endif %} {%
+                                                                endif %}>Permanent Employee
+                                                            </option>
+                                                            <option value="Manager" {% if user!="None" %} {% if
+                                                                user['desig']=='Manager' %} selected {% endif %} {%
+                                                                endif %}>Manager</option>
+                                                            <option value="HR" {% if user!="None" %} {% if
+                                                                user['desig']=='HR' %} selected {% endif %} {% endif %}>
+                                                                HR</option>
+                                                            <option value="Other" {% if user!="None" %} {% if
+                                                                user['desig']=='Other' %} selected {% endif %} {% endif
+                                                                %}>Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-2">
+                                                    <label class="form-label select-label">Shift</label>
+                                                    <div class="select-container">
+                                                        <select class="select form-control" name="shift">
+                                                            <option value="Day" {% if user!="None" %} {% if
+                                                                user['shift']=='Day' %} selected {% endif %} {% endif
+                                                                %}>Day</option>
+                                                            <option value="Night" {% if user!="None" %} {% if
+                                                                user['shift']=='Night' %} selected {% endif %} {% endif
+                                                                %}>Night</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5"></div>
+                                                <div class="col-sm-2 mt- pt-2">
+                                                    <input class="btn btn-dark btn" id="submitBtn" type="submit"
+                                                        value="Submit" style="width: 100px;" />
+                                                </div>
+                                                <div class="col-sm-5"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        </main>
+        </div>
+        <script src="../../static/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../../static/js/jquery-3.5.1.js"></script>
+        <script src="../../static/js/jquery.dataTables.min.js"></script>
+        <script src="../../static/js/dataTables.bootstrap5.min.js"></script>
+        <script src="../../static/js/register_user.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,189 @@
+h1 {
+    color: #007bff;
+    text-align: center;
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .notification-list {
+    margin-top: 0px;
+    /* Adjust the margin-top value as needed */
+
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sender-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .sender-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: #007bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .notification-content {
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+
+  .notification-time {
+    color: #6c757d;
+    font-size: 12px;
+  }
+
+
+  #announcementContainer {
+    margin-top: 20px;
+  }
+
+  #announcementInput {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  #subjectInput {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  #replaceButton {
+    width: calc(20% - 20px);
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    translate: 215%;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  #replaceButton:hover {
+    background-color: #0056b3;
+  }
+
+  /* Updated styles for the notification card container */
+  .announcement-container {
+    max-width: 1500px;
+    margin-left: 0px;
+    max-height: 488px;
+    overflow: auto;
+  }
+
+  /* Updated styles for the announcement box */
+  .announcement {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    /* Adjusted margin-top for better alignment */
+    margin-left: 300px;
+    /* Adjusted margin-left for better alignment */
+  }
+
+  /* Updated styles for the notification card container */
+  .notification-container {
+    max-width: 1500px;
+    margin-left: 0px;
+    max-height: 488px;
+    overflow: auto;
+    top: 70px;
+  }
+
+  /* Updated styles for the notification card */
+  .notification {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    /* Adjusted margin-bottom for a smaller gap */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Adjusted margin-top for better alignment */
+    margin-left: 300px;
+    margin-top: 10px;
+    margin-right: 22px;
+    /* Adjusted margin-left for better alignment */
+  }
+
+  .noti {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 70px;
+    margin-left: 300px;
+    /* Adjusted margin for better alignment */
+  }
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 100%;
+    max-height: 59%;
+    bottom: 0;
+    position: fixed;
+  }
+  .hoverable-dropdown {
+    position: relative;
+    display: inline-block; /* Ensures the hoverable area takes up the entire width of the content */
+}
+.dropdown-item{
+    max-height: 20px !important; /* Adjust the fixed height as needed */
+    overflow-y: scroll !important; 
+}
+.dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    /*z-index: 1;
+    top: 100%;*/
+   
+}
+
+.hoverable-dropdown:hover .dropdown-content,
+.dropdown-content:hover {
+    display: block;
+}
+#signout-btn{
+  padding:5px
+}

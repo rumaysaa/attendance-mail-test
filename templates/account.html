@@ -1,0 +1,301 @@
+<link rel="stylesheet" href="../static/styles/account.css">
+<div class="wrapper bg-white mt-sm-5">
+    {%if change_success!= None%}
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </symbol>
+    </svg>
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+            <use xlink:href="#check-circle-fill" />
+        </svg>
+        <div>
+            {{change_success}}
+        </div>
+    </div>
+    {%endif%}
+    {% if null_err!= None %}
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </symbol>
+    </svg>
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        <div>
+            {{null_err}}
+        </div>
+    </div>
+    {%endif%}
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">View Profile</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Change Password</button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div id="home" class="tab-pane" role="tabpanel" aria-labelledby="profile-tab">
+
+                <div class="d-flex align-items-start py-3 border-bottom" style="margin: 40px;">
+                    <img src="../static/images/{{acc_data['avatarID']}}.jpg" class="img-icon" alt="">
+                    <div class="pl-sm-4 pl-2" id="img-section">
+                        <b>My Profile</b>
+                        <div class="mb-1">
+                            {{acc_data["fname"]}} {{acc_data["lname"]}}
+                        </div>
+                        <div>
+                            <button id="avatar-btn" class="btn btn-light" onclick="onAvatarClick()">
+                                <span style="color: grey; font-size: 12px;"><i class='bx bx-edit'></i>
+                                    <span>Change Avatar</span></span>
+                            </button>
+                            <button id="avatar-btn" class="btn btn-light" onclick="showWeek()">
+                                <span style="color: grey; font-size: 12px;"><i class='bx bx-alarm'></i>
+                                    <span>Set Reminders</span></span>
+                            </button>
+                            <span id="weekdays" class="weekDays-selector" style="margin-left:5px; display:none;">
+                                <input type="checkbox" name="days" value="monday" id="weekday-mon" class="weekday" {%if "monday" in acc_data['reminders']%} checked {%endif%} />
+                                <label for="weekday-mon">M</label>
+                                <input type="checkbox" name="days" value="tuesday" id="weekday-tue" class="weekday" {%if "tuesday" in acc_data['reminders']%} checked {%endif%}/>
+                                <label for="weekday-tue">T</label>
+                                <input type="checkbox" name="days" value="wednesday" id="weekday-wed" class="weekday" {%if "wednesday" in acc_data['reminders']%} checked {%endif%}/>
+                                <label for="weekday-wed">W</label>
+                                <input type="checkbox" name="days" value="thursday" id="weekday-thu" class="weekday" {%if "thursday" in acc_data['reminders']%} checked {%endif%}/>
+                                <label for="weekday-thu">T</label>
+                                <input type="checkbox" name="days" value="friday" id="weekday-fri" class="weekday" {%if "friday" in acc_data['reminders']%} checked {%endif%} />
+                                <label for="weekday-fri">F</label>
+                                <input type="checkbox" name="days" value="saturday" id="weekday-sat" class="weekday" {%if "saturday" in acc_data['reminders']%} checked {%endif%}/>
+                                <label for="weekday-sat">S</label>
+                                <input type="checkbox" name="days" value="sunday" id="weekday-sun" class="weekday" {%if "sunday" in acc_data['reminders']%} checked {%endif%} />
+                                <label for="weekday-sun">S</label>
+                                <button id="submit-week" class="btn" style="background-color: rgb(69, 69, 69);color:white" onclick="submitDays()">
+                                    <span style=" font-size: 12px;">
+                                        <span>Change</span></span>
+                                </button>
+                            </span>
+                           
+                        </div>
+                    </div>
+
+                </div>
+                <div id="avatar-div" style="display:none;">
+                    <div class="choose-avatar">
+                        <div class="avatars-container">
+                            <span class="left"></span>
+                            <form method="post" action="/action/">
+                                <div class="avatars">
+                                    <a href="/account?id=f1">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/f1.jpg');">
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m1">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m1.jpg');">
+                                            <input type="radio" name="avatar" value="m1" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m2">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m2.jpg');">
+                                            <input type="radio" name="avatar" value="m2" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m3">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m3.jpg');">
+                                            <input type="radio" name="avatar" value="m3" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=f2">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/f2.jpg');">
+                                            <input type="radio" name="avatar" value="f2" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m5">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m5.jpg');">
+                                            <input type="radio" name="avatar" value="m5" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=f3">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/f3.jpg');">
+                                            <input type="radio" name="avatar" value="f3" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=profile">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/profile.jpg');">
+                                            <input type="radio" name="avatar" value="profile" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m4">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m4.jpg');">
+                                            <input type="radio" name="avatar" value="m4" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m6">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m6.jpg');">
+                                            <input type="radio" name="avatar" value="m6" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                    <a href="/account?id=m7">
+                                        <div class="avatar-item a-col"
+                                            style="background-image: url('../static/images/m7.jpg');">
+                                            <input type="radio" name="avatar" value="m7" hidden>
+                                            <span id="text-avatar">Choose</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </form>
+                            <span class="right"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="form-container">
+                    <!--<form enctype="multipart/form-data" method="post" action="/account/">-->
+                    <div class="py-2">
+                        <div class="row py-2">
+                            <div class="col-md-6">
+                                <!--<input type="text" id="emp_id" name="emp_id" value="{{empID}}" hidden>
+                                <div class="label" >First Name</div>
+                                <div class="data">{{acc_data["fname"]}}</div>-->
+                                <label for="firstname">First Name</label>
+                                <input type="text" class="bg-light form-control" name="fname"
+                                    value='{{acc_data["fname"]}}' disabled>
+                            </div>
+                            <div class="col-md-6 pt-md-0 pt-3">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" class="bg-light form-control" name="lname"
+                                    value='{{acc_data["lname"]}}' disabled>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-6">
+                                <label for="email">Email Address</label>
+                                <input type="text" class="bg-light form-control" name="mail" {% if acc_data['email']
+                                    !=None %} value='{{acc_data["email"]}}' {% endif %} disabled>
+                            </div>
+                            <div class="col-md-6 pt-md-0 pt-3">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" class="bg-light form-control" name="phone" {% if acc_data['phone']
+                                    !=None %} value='{{acc_data["phone"]}}' {% endif %} disabled>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-6">
+                                <label for="Date of birth">Date of birth</label>
+                                <input type="date" class="bg-light form-control" name="dob" {% if acc_data['dob'] !=None
+                                    %} value='{{acc_data["dob"]}}' {% endif %} disabled>
+                            </div>
+                            <div class="col-md-6 pt-md-0 pt-3" id="lang">
+                                <label for="Date of joining">Date of joining</label>
+                                <div class="arrow">
+                                    <input type="date" class="bg-light form-control" name="joining_date" {% if
+                                        acc_data['joining_date'] !=None %} value='{{acc_data["joining_date"]}}' {% endif
+                                        %} disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-3 pt-md-0 pt-3">
+                                <label for="city">City</label>
+                                <div class="arrow">
+                                    <input type="text" class="bg-light form-control" name="city" {% if acc_data['city']
+                                        !=None %} value='{{acc_data["city"]}}' {% endif %} disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pt-md-0 pt-3">
+                                <label for="gender">Gender</label>
+                                <div class="arrow">
+                                    <input type="text" class="bg-light form-control" name="city" {% if
+                                        acc_data['gender'] !=None %} value='{{acc_data["gender"]}}' {% endif %}
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pt-md-0 pt-3">
+                                <label for="designation">Designation</label>
+                                <div class="arrow">
+                                    <input type="text" class="bg-light form-control" name="city" {% if acc_data['desig']
+                                        !=None %} value='{{acc_data["desig"]}}' {% endif %} disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pt-md-0 pt-3">
+                                <label for="shift">Shift</label>
+                                <div class="arrow">
+                                    <input type="text" class="bg-light form-control" name="city" {% if acc_data['shift']
+                                        !=None %} value='{{acc_data["shift"]}}' {% endif %} disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-12">
+                                <label for="Address">Address</label>
+                                <textarea class="bg-light form-control" name="address"
+                                    disabled>{% if acc_data['address'] != None%}{{acc_data["address"]}}{% endif %}</textarea>
+                            </div>
+                        </div>
+                        <!--<div class="py-3 pb-4 border-bottom">
+                                <button type="submit" class="btn btn-dark mr-3">Save Changes</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </div>-->
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade show" id="nav-profile" style="padding: 60px;" role="tabpanel"
+            aria-labelledby="nav-profile-tab">
+            <form id="changePwdForm" method="post">
+                <input type="text" id="emp_id" name="emp_id" value="{{empID}}" hidden>
+                <label for="old_pwd">Enter Current Password</label>
+                <input type="password" class="bg-light form-control" name="old_pwd" id="old_pwd" required>
+                <div id="old_pwd_err"></div>
+                <label for="new_pwd1">Enter New Password</label>
+                <input type="password" class="bg-light form-control" name="new_pwd1" id="new_pwd1" required>
+                <label for="new_pwd2">Confirm New Password</label>
+                <input type="password" class="bg-light form-control" name="new_pwd2" id="new_pwd2" required>
+                <div id="not_match_err"></div>
+            </form><br>
+            <button class="btn btn-dark mr-3" onclick="change_pwd()">Submit</button>
+        </div>
+    </div>
+</div>
+<script src="../static/js/account.js"></script>

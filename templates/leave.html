@@ -1,0 +1,174 @@
+<style>
+    .container-custom {
+        margin: 0;
+        translate: 0% 1%;
+        margin-top: 40px;
+    }
+
+    .container-fluid {
+        translate: 0% 0%;
+    }
+
+    body {
+        margin-top: 0px;
+    }
+
+    .btn-app {
+        background-color: #a1c7ca;
+        margin: 5px;
+    }
+
+    .leave-card {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .leave-card header {
+        font-size: 24px;
+        color: #468387;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .btn-approve,
+    .btn-reject {
+        margin-top: 10px;
+    }
+
+    /* scrollbar */
+    div::-webkit-scrollbar {
+        display: block;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(90, 90, 90, 0.558);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+
+    }
+
+    ::-webkit-scrollbar-thumb {
+        margin-top: 5px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: rgb(255, 255, 255, 0.5);
+        -webkit-box-shadow: inset 0 0 6px rgba(69, 67, 67, 0.8);
+        margin-top: 5%;
+
+    }
+
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(255, 255, 255, 0.3);
+    }
+</style>
+<div class="container-custom">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn me-md-2 btn-app" type="button" onclick="location.href='/leave/apply';">Apply for
+            leave</button>
+    </div>
+
+    <div class="row">
+        {%if leaves == []%}
+        <div class="row" >
+            <div class="col-lg-5"></div>
+            <div class="col-lg-4">
+                <span
+                    style="color: rgb(171, 171, 171); text-align: center; align-items: center; align-content: center;">No
+                    leave requests</span>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+        {%endif%}
+        {% for leave in leaves %}
+        <div class="col-md-12">
+            <div class="leave-card">
+                <header>{{leave['leaveType']}} Leave</header>
+                <hr>
+                <div class="leave-details" style="padding:10px">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p><strong>From:</strong> {{leave['startDate']}}</p>
+                        </div>
+
+                        {% if leave['endDate']!=None %}
+                        <div class="col-sm-4">
+                            <p><strong>To:</strong> {{leave['endDate']}}</p>
+                        </div>
+                        {% endif %}
+
+
+                        {% if leave['startHour']!=None %}
+                        <div class="col-sm-4">
+                            <p><strong>Start Hour:</strong> {{leave['startHour']}}</p>
+                        </div>
+                        {%
+                        endif %}
+
+
+                        {% if leave['endHour']!=None %}
+                        <div class="col-sm-4">
+                            <p><strong>End Hour:</strong> {{leave['endHour']}}</p>
+                        </div>
+                        {%
+                        endif %}
+
+                    </div>
+                    <p><strong>Content: </strong> <input class="btn-sm btn btn-light " type="button"
+                            id="{{leave['_id']}}" onclick="showMsg(`{{leave['_id']}}`)" value="Show">
+                    <div id="{{leave['_id']}}msg"
+                        style="white-space: pre-wrap;height: 350px;overflow-y: auto; background-color: rgb(248, 248, 248);display: none;padding:5px">
+                        <div>{{leave['reason']}}</div>
+                        <div style="color:grey;" class="text-end">Applied on: {{leave['appliedOn']}}</div>
+                    </div>
+                    </p>
+                    <p><strong>Status:
+                            {% if leave['status'] == -1 %}
+                            <span style="color:rgb(203, 172, 33)">Pending
+                            </span></p>
+                    {% elif leave['status'] == 1 %}
+                    <span style="color:rgb(9, 157, 19)">Approved
+                    </span></p>
+                    {% elif leave['status'] == 0 %}
+                    <span style="color:rgb(203, 42, 37)">Declined
+                    </span></p>
+                    {%endif%}
+                    </strong>
+                    {% if leave['message'] != "" %}
+                    <p style="font-size: 13px;">Message from Admin:
+                        <span>{{leave['message']}}
+                        </span>
+                    </p>
+                    {%endif%}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Add more leave cards for other requests -->
+    </div>
+</div>
+<script>
+    function showMsg(leaveID) {
+        btn = document.getElementById(leaveID)
+        msg = document.getElementById(leaveID + 'msg')
+        if (msg.style.display == "none") {
+            msg.style.display = "block"
+            btn.value = 'Hide'
+        }
+        else if (msg.style.display == "block") {
+            msg.style.display = "none"
+            btn.value = 'Show'
+        }
+    }
+</script>
